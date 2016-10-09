@@ -32,8 +32,9 @@ func TestMerge(t *testing.T) {
 
 	original := createOriginal()
 	updates := createUpdate()
+	fields := []string{"Name", "Payload"}
 
-	Merge(&original, &updates)
+	Merge(&original, &updates, fields)
 
 	if original.ID != 1 {
 		t.Error("Original ID should be 1, got", original.ID)

@@ -5,8 +5,19 @@ import (
 	"reflect"
 )
 
+func sliceContains(ss []string, val string) bool {
+	fmt.Println(val)
+	for _, s := range ss {
+
+		if s == val {
+			return true
+		}
+	}
+	return false
+}
+
 //Merge ...
-func Merge(original interface{}, updates interface{}) {
+func Merge(original interface{}, updates interface{}, fields []string) {
 
 	oVal := reflect.ValueOf(original)
 
@@ -20,9 +31,12 @@ func Merge(original interface{}, updates interface{}) {
 		uVal = uVal.Elem()
 	}
 
-	typ := oVal.Type()
-
 	for i := 0; i < oVal.NumField(); i++ {
-		fmt.Println(typ.Field(i).Name)
+
+		if sliceContains(fields, oVal.Type().Field(i).Name) {
+
+			oVal.Field(i).Set(uVal.Field(i))
+		}
+
 	}
 }

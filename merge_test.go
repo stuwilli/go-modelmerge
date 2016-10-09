@@ -4,6 +4,7 @@ import "testing"
 
 type TestSubModel struct {
 	Data string `json:"data"`
+	More string `json:"more"`
 }
 
 type TestModel struct {
@@ -14,7 +15,7 @@ type TestModel struct {
 
 func createOriginal() TestModel {
 
-	sub := TestSubModel{Data: "boom"}
+	sub := TestSubModel{Data: "boom", More: "bap"}
 	orig := TestModel{ID: 1, Name: "Original", Payload: sub}
 
 	return orig
@@ -46,5 +47,9 @@ func TestMerge(t *testing.T) {
 
 	if original.Payload.Data != "boom!!!" {
 		t.Error("Original Payload should have been updated, got", original.Payload.Data)
+	}
+
+	if original.Payload.More != "bap" {
+		t.Error("Original Payload more value should not have been updated, got", original.Payload.More)
 	}
 }
